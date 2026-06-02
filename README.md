@@ -44,7 +44,7 @@
 
         Built using Databricks Lakeview Dashboard, querying Gold Delta tables directly.
         
-        ![Dashboard Overview](images/Nigeria deaths by year by violence type.png)
+        ![Dashboard Overview](https://github.com/data-with-joe/west-africa-conflict-pipeline/tree/main/images)
 
 
 ## Data Source

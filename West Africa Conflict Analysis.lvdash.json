@@ -1,0 +1,848 @@
+{
+  "datasets": [
+    {
+      "name": "7be18193",
+      "displayName": "incidents_by_country_year",
+      "config": {
+        "version": "1.1",
+        "source": "west_africa_conflict.gold.incidents_by_country_year",
+        "dimensions": [
+          {
+            "name": "country",
+            "expr": "source.country",
+            "displayName": "Country"
+          },
+          {
+            "name": "year",
+            "expr": "source.year",
+            "displayName": "Year"
+          },
+          {
+            "name": "total_incidents",
+            "expr": "source.total_incidents",
+            "displayName": "Total Incidents"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "6138dc7a",
+      "displayName": "fatalities_by_country",
+      "config": {
+        "version": "1.1",
+        "source": "west_africa_conflict.gold.fatalities_by_country",
+        "dimensions": [
+          {
+            "name": "country",
+            "expr": "source.country",
+            "displayName": "Country"
+          },
+          {
+            "name": "year",
+            "expr": "source.year",
+            "displayName": "Year"
+          },
+          {
+            "name": "total_deaths",
+            "expr": "source.total_deaths",
+            "displayName": "Total Deaths"
+          },
+          {
+            "name": "civilian_deaths",
+            "expr": "source.civilian_deaths",
+            "displayName": "Civilian Deaths"
+          },
+          {
+            "name": "side_a_deaths",
+            "expr": "source.side_a_deaths",
+            "displayName": "Side A Deaths"
+          },
+          {
+            "name": "side_b_deaths",
+            "expr": "source.side_b_deaths",
+            "displayName": "Side B Deaths"
+          },
+          {
+            "name": "unknown_deaths",
+            "expr": "source.unknown_deaths",
+            "displayName": "Unknown Deaths"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "abd33c6b",
+      "displayName": "violence_type_breakdown",
+      "config": {
+        "version": "1.1",
+        "source": "west_africa_conflict.gold.violence_type_breakdown",
+        "dimensions": [
+          {
+            "name": "country",
+            "expr": "source.country",
+            "displayName": "Country"
+          },
+          {
+            "name": "violence_type_desc",
+            "expr": "source.violence_type_desc",
+            "displayName": "Violence Type Desc"
+          },
+          {
+            "name": "total_incidents",
+            "expr": "source.total_incidents",
+            "displayName": "Total Incidents"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "4802676e",
+      "displayName": "nigeria_deep_dive",
+      "config": {
+        "version": "1.1",
+        "source": "west_africa_conflict.gold.nigeria_deep_dive",
+        "dimensions": [
+          {
+            "name": "year",
+            "expr": "source.year",
+            "displayName": "Year"
+          },
+          {
+            "name": "violence_type_desc",
+            "expr": "source.violence_type_desc",
+            "displayName": "Violence Type Desc"
+          },
+          {
+            "name": "total_incidents",
+            "expr": "source.total_incidents",
+            "displayName": "Total Incidents"
+          },
+          {
+            "name": "total_deaths",
+            "expr": "source.total_deaths",
+            "displayName": "Total Deaths"
+          },
+          {
+            "name": "civilian_deaths",
+            "expr": "source.civilian_deaths",
+            "displayName": "Civilian Deaths"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "62a9cc52",
+      "displayName": "hotspot top20",
+      "queryLines": [
+        "SELECT\n",
+        "    country,\n",
+        "    state_province,\n",
+        "    total_incidents,\n",
+        "    total_deaths,\n",
+        "    civilian_deaths\n",
+        "FROM hotspot_locations\n",
+        "WHERE state_province != 'Unknown'\n",
+        "ORDER BY total_incidents DESC\n",
+        "LIMIT 20"
+      ],
+      "catalog": "west_africa_conflict",
+      "schema": "gold"
+    }
+  ],
+  "pages": [
+    {
+      "name": "22ad519c",
+      "displayName": "conflict dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "total",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "7be18193",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "total_incidents",
+                      "expression": "`total_incidents`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Total Incidents By Country Per Year"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_incidents",
+                  "displayName": "total incidents",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "country",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    },
+                    "mappings": [
+                      {
+                        "value": "Burkina Faso",
+                        "color": "#FF00DB"
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 1,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "country",
+            "queries": [
+              {
+                "name": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eaa776315ec88279a0cc426c8f0_country",
+                "query": {
+                  "datasetName": "7be18193",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "country_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Country"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "country",
+                    "queryName": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eaa776315ec88279a0cc426c8f0_country"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "t1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "6138dc7a",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "total_deaths",
+                      "expression": "`total_deaths`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Total fatalities by country per year"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "natural-order"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "total_deaths",
+                  "displayName": "total death",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "country",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Burkina Faso",
+                        "color": "#FF00B1"
+                      }
+                    ],
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "country-1",
+            "queries": [
+              {
+                "name": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eac379d1de98da26c3d14438fea_country",
+                "query": {
+                  "datasetName": "6138dc7a",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "country_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Country"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "country",
+                    "queryName": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eac379d1de98da26c3d14438fea_country"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 7,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "tot1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "abd33c6b",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "violence_type_desc",
+                      "expression": "`violence_type_desc`"
+                    },
+                    {
+                      "name": "total_incidents",
+                      "expression": "`total_incidents`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Violence type breakdown by country"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "violence_type_desc",
+                  "displayName": "Violence Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_incidents",
+                  "displayName": "Total Incidents",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "country",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Burkina Faso",
+                        "color": "#FF00C1"
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "showTotal": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "country-11",
+            "queries": [
+              {
+                "name": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15ead63b41ab6882df30d7346f070_country",
+                "query": {
+                  "datasetName": "abd33c6b",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "country_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Country"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "country",
+                    "queryName": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15ead63b41ab6882df30d7346f070_country"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 14,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "t2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "4802676e",
+                  "fields": [
+                    {
+                      "name": "violence_type_desc",
+                      "expression": "`violence_type_desc`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "total_incidents",
+                      "expression": "`total_incidents`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Nigeria incidents by year by violence type"
+              },
+              "mark": {
+                "layout": "group"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "axis": {
+                    "labelAngle": 0
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "natural-order"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "total_incidents",
+                  "displayName": "total incidents",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "violence_type_desc",
+                  "displayName": "violence type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 24,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "country-2",
+            "queries": [
+              {
+                "name": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eae41301f26b9e0ffb0beb5a240_violence_type_desc",
+                "query": {
+                  "datasetName": "4802676e",
+                  "fields": [
+                    {
+                      "name": "violence_type_desc",
+                      "expression": "`violence_type_desc`"
+                    },
+                    {
+                      "name": "violence_type_desc_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "violence type"
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "violence_type_desc",
+                    "queryName": "dashboards/01f15ea8ec401b1892ccffc432e6b6da/datasets/01f15eae41301f26b9e0ffb0beb5a240_violence_type_desc"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 23,
+            "width": 4,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "total-death-1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "4802676e",
+                  "fields": [
+                    {
+                      "name": "violence_type_desc",
+                      "expression": "`violence_type_desc`"
+                    },
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "total_deaths",
+                      "expression": "`total_deaths`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Nigeria deaths by year by violence type"
+              },
+              "mark": {
+                "layout": "stack"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "axis": {
+                    "hideGrid": false,
+                    "labelAngle": 0
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "natural-order"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "total_deaths",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "displayName": "total death",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "violence_type_desc",
+                  "displayName": "violence type",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 30,
+            "width": 12,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "top-conflict-hotspots",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "62a9cc52",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "state_province",
+                      "expression": "`state_province`"
+                    },
+                    {
+                      "name": "total_incidents",
+                      "expression": "`total_incidents`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Top conflict zones"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "state_province",
+                  "displayName": "State/ Province",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "total_incidents",
+                  "displayName": "total Incidents",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "country",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 37,
+            "width": 12,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
